@@ -17,6 +17,7 @@ struct RecipeListView: View {
         }
         .onAppear {
             // TODO: Loading wheel
+            // TODO: Swift Concurrency!
             NetworkManager.getRecipes { resp in
                 resp.recipes.forEach { recipe in
                     recipes.append( RecipeViewModel(recipe: recipe) )
