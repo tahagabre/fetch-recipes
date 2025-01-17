@@ -30,25 +30,36 @@ class RecipeViewModel {
         return recipe.youtube_url
     }
     
-    lazy var largePhoto: UIImage = {
-        if let urlString = recipe.photo_url_large,
-           let largeUrl = URL(string: urlString),
-           let data = try? Data(contentsOf: largeUrl),
-           let image = UIImage(data: data) {
-            return image
-        }
+    var smallPhotoURL: URL? {
+        guard let urlString = recipe.photo_url_small,
+              let url = URL(string: urlString) else { return nil }
         
-        return UIImage()
-    }()
+        return url
+    }
     
-    lazy var smallPhoto: UIImage = {
-        if let urlString = recipe.photo_url_small,
-           let largeUrl = URL(string: urlString),
-           let data = try? Data(contentsOf: largeUrl),
-           let image = UIImage(data: data) {
-            return image
-        }
-        
-        return UIImage()
-    }()
+//    var largePhotoURL: URL = {
+//        return URL(string: recipe.photo_url_large)
+//    }
+    
+//    lazy var largePhoto: UIImage = {
+//        if let urlString = recipe.photo_url_large,
+//           let largeUrl = URL(string: urlString),
+//           let data = try? Data(contentsOf: largeUrl),
+//           let image = UIImage(data: data) {
+//            return image
+//        }
+//        
+//        return UIImage()
+//    }()
+    
+//    lazy var smallPhoto: UIImage = {
+//        if let urlString = recipe.photo_url_small,
+//           let largeUrl = URL(string: urlString),
+//           let data = try? Data(contentsOf: largeUrl),
+//           let image = UIImage(data: data) {
+//            return image
+//        }
+//        
+//        return UIImage()
+//    }()
 }
