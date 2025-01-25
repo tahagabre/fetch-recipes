@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4AD42E272D45554C00FB0425 /* FilterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD42E262D45554C00FB0425 /* FilterListView.swift */; };
+		4AD42E2B2D45578200FB0425 /* PlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD42E2A2D45578200FB0425 /* PlaygroundView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4A02CC332D37290F00B8931A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,8 @@
 		4A02CC222D37290E00B8931A /* FetchRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FetchRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A02CC322D37290F00B8931A /* FetchRecipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchRecipeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A02CC3C2D37290F00B8931A /* FetchRecipeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchRecipeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AD42E262D45554C00FB0425 /* FilterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterListView.swift; path = FetchRecipe/FilterListView.swift; sourceTree = "<group>"; };
+		4AD42E2A2D45578200FB0425 /* PlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaygroundView.swift; path = FetchRecipe/PlaygroundView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -90,6 +97,8 @@
 		4A02CC192D37290E00B8931A = {
 			isa = PBXGroup;
 			children = (
+				4AD42E2A2D45578200FB0425 /* PlaygroundView.swift */,
+				4AD42E262D45554C00FB0425 /* FilterListView.swift */,
 				4A02CC642D37322D00B8931A /* Networking */,
 				4A02CC602D372C8300B8931A /* ViewModels */,
 				4A02CC4F2D37297100B8931A /* Models */,
@@ -257,6 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AD42E2B2D45578200FB0425 /* PlaygroundView.swift in Sources */,
+				4AD42E272D45554C00FB0425 /* FilterListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,40 +1,38 @@
 import SwiftUI
 
+class Manager: ObservableObject {
+    @Published var recipes: [RecipeViewModel] = []
+    @Published var appliedFilters: [String] = []
+    
+    var cuisineList: [String] {
+        return Array(Set(recipes.map { $0.cuisine })).sorted(by: <)
+    }
+    
+    var filteredList: [RecipeViewModel] {
+        return recipes.filter { recipe in
+            appliedFilters.allSatisfy { filter in
+                recipe.cuisine == filter
+            }
+        }
+    }
+}
+
 // TODO: Title
 struct RecipeListView: View {
-    @State var recipes: [RecipeViewModel] = []
+    @EnvironmentObject var manager: Manager
     
     var body: some View {
         NavigationStack {
-            if recipes.isEmpty {
+            if manager.recipes.isEmpty {
                 ProgressView()
                     .navigationTitle(Text("Fetch Recipes"))
             }
             else {
                 VStack {
                     Spacer()
-                    ScrollView(.horizontal) {
-                        LazyHStack {
-                            let cuisines = Array(Set(recipes.map { $0.cuisine })).sorted(by: <)
-                            ForEach(cuisines, id: \.self) { cuisine in
-                                Button(cuisine) {
-                                    // TODO: get recipes to filter on tap
-//                                    recipes.filter { $0 == cuisine }
-                                }
-                            }
-                            Button("Has YouTube Video") {
-                                
-                            }
-                            Button("Has Link") {
-                                
-                            }
-                            Button("Favorites") {
-                                
-                            }
-                        }
-                        .frame(height: 30)
-                    }
-                    List(recipes, id: \.uuid) { recipe in
+                    FilterListView()
+                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 26))
+                    List(manager.filteredList, id: \.uuid) { recipe in
                         RecipeListCell(recipe: recipe)
                             .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                     }
@@ -47,7 +45,7 @@ struct RecipeListView: View {
             Task {
                 do {
                     let fetchedRecipes = try await NetworkManager.getRecipes()
-                    recipes = fetchedRecipes.recipes.map { RecipeViewModel(recipe: $0) }
+                    manager.recipes = fetchedRecipes.recipes.map { RecipeViewModel(recipe: $0) }
                 }
                 // TODO: Replacing view when error occurs
                 catch let error as FetchError {

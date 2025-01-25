@@ -11,7 +11,8 @@ import SwiftUI
 struct FetchRecipeApp: App {
     var body: some Scene {
         WindowGroup {
-            RecipeListView()
+            RecipeListView().environmentObject(Manager())
+//            PlaygroundView().environmentObject(ManagerPlaceholder())
         }
     }
 }
