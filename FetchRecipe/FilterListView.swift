@@ -1,6 +1,5 @@
 import SwiftUI
 
-// TODO: Filter VM for our filtering
 struct FilterListView: View {
     @EnvironmentObject var manager: Manager
     
@@ -8,22 +7,11 @@ struct FilterListView: View {
         VStack {
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(manager.cuisineList, id: \.self) { cuisine in
+                    ForEach(manager.cuisines, id: \.self) { cuisine in
                         SelectableFilterButton(title: cuisine) {
                             manager.appliedFilters.contains(cuisine) ? manager.appliedFilters.removeAll(where: {$0 == cuisine}) : manager.appliedFilters.append(cuisine)
                         }
                     }
-                }
-            }
-            HStack {
-                SelectableFilterButton(title: "Has YouTube Video") {
-                    
-                }
-                SelectableFilterButton(title: "Has Web Link") {
-                    
-                }
-                SelectableFilterButton(title: "Favorites") {
-                    manager.appliedFilters.append("Favorites")
                 }
             }
             Button("Clear All Filters") {

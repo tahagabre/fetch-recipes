@@ -6,10 +6,31 @@ struct RecipeListCell: View {
     var body: some View {
         HStack {
             VStack {
-                Text(recipe!.name)
+                Text(recipe?.name ?? "")
                     .font(.title3)
                     .multilineTextAlignment(.leading)
+                    .lineLimit(3)
                 NonSelectableFilterButton(title: recipe?.cuisine ?? "", action: {})
+                Spacer()
+                if let source = recipe?.sourceUrl {
+                    Link(destination: source) {
+                        HStack {
+                            Text("Visit site")
+                                .multilineTextAlignment(.leading)
+                            Image(systemName: "safari.fill")
+                        }
+                    }
+                    Spacer()
+                }
+                else if let video = recipe?.videoURL {
+                    Link(destination: video) {
+                        HStack {
+                            Text("Watch video")
+                                .multilineTextAlignment(.leading)
+                            Image(systemName: "video.circle.fill")
+                        }
+                    }
+                }
             }
             Spacer(minLength: 10)
             AsyncImage(url: recipe?.smallPhotoURL) { phase in
@@ -22,6 +43,7 @@ struct RecipeListCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .frame(width: 150)
                 default:
                     Image(systemName: "photo")
                         .resizable()
@@ -29,9 +51,6 @@ struct RecipeListCell: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
-            Spacer(minLength: 10)
-            Image(systemName: "chevron.right")
-                .frame(alignment: .trailing)
         }
         .swipeActions {
             Button("Favorite", systemImage: "star", action: {
@@ -41,3 +60,7 @@ struct RecipeListCell: View {
         }
     }
 }
+
+//struct RecipeSiteLink
+//
+//struct RecipeVideoLink

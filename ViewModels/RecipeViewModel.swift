@@ -22,16 +22,29 @@ class RecipeViewModel {
     
     // MARK: Optional
     
-    var source_url: String? {
-        return recipe.source_url
+    var sourceUrl: URL? {
+        guard let urlString = recipe.source_url,
+              let url = URL(string: urlString) else { return nil }
+        
+        return url
     }
     
-    var youtube_url: String? {
-        return recipe.youtube_url
+    var videoURL: URL? {
+        guard let urlString = recipe.youtube_url,
+              let url = URL(string: urlString) else { return nil }
+        
+        return url
     }
     
     var smallPhotoURL: URL? {
         guard let urlString = recipe.photo_url_small,
+              let url = URL(string: urlString) else { return nil }
+        
+        return url
+    }
+    
+    var largePhotoURL: URL? {
+        guard let urlString = recipe.photo_url_large,
               let url = URL(string: urlString) else { return nil }
         
         return url

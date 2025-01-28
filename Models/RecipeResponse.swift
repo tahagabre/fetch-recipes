@@ -2,7 +2,7 @@ struct RecipesResponse: Codable {
     let recipes: [RecipeResponse]
 }
 
-struct RecipeResponse: Codable {
+struct RecipeResponse: Codable, Hashable {
     // MARK: Required
     let cuisine: String
     let name: String
