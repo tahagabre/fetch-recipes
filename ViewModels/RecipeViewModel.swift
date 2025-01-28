@@ -7,7 +7,7 @@ class RecipeViewModel {
         self.recipe = recipe
     }
     
-    // MARK: Required
+    // MARK: Getters
     var cuisine: String {
         return recipe.cuisine
     }
@@ -37,29 +37,6 @@ class RecipeViewModel {
         return url
     }
     
-//    var largePhotoURL: URL = {
-//        return URL(string: recipe.photo_url_large)
-//    }
-    
-//    lazy var largePhoto: UIImage = {
-//        if let urlString = recipe.photo_url_large,
-//           let largeUrl = URL(string: urlString),
-//           let data = try? Data(contentsOf: largeUrl),
-//           let image = UIImage(data: data) {
-//            return image
-//        }
-//        
-//        return UIImage()
-//    }()
-    
-//    lazy var smallPhoto: UIImage = {
-//        if let urlString = recipe.photo_url_small,
-//           let largeUrl = URL(string: urlString),
-//           let data = try? Data(contentsOf: largeUrl),
-//           let image = UIImage(data: data) {
-//            return image
-//        }
-//        
-//        return UIImage()
-//    }()
+    // MARK: Setters
+    var isFavorited: Bool = false
 }

@@ -4,8 +4,14 @@ struct RecipeListCell: View {
     @State var recipe: RecipeViewModel?
     
     var body: some View {
-        LazyVStack {
-            // TODO: stub out image
+        HStack {
+            VStack {
+                Text(recipe!.name)
+                    .font(.title3)
+                    .multilineTextAlignment(.leading)
+                NonSelectableFilterButton(title: recipe?.cuisine ?? "", action: {})
+            }
+            Spacer(minLength: 10)
             AsyncImage(url: recipe?.smallPhotoURL) { phase in
                 switch phase {
                 case .empty:
@@ -13,18 +19,25 @@ struct RecipeListCell: View {
                         .progressViewStyle(.circular)
                 case .success(let image):
                     image
-                        .scaledToFill()
-                        .clipped()
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 default:
                     Image(systemName: "photo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
-            Spacer()
-            HStack {
-                Text(recipe?.name ?? "")
-                Spacer()
-                Image(systemName: "star")
-            }
+            Spacer(minLength: 10)
+            Image(systemName: "chevron.right")
+                .frame(alignment: .trailing)
+        }
+        .swipeActions {
+            Button("Favorite", systemImage: "star", action: {
+                recipe?.isFavorited.toggle()
+            })
+            .tint(.yellow)
         }
     }
 }

@@ -17,7 +17,6 @@ class Manager: ObservableObject {
     }
 }
 
-// TODO: Title
 struct RecipeListView: View {
     @EnvironmentObject var manager: Manager
     
@@ -32,10 +31,13 @@ struct RecipeListView: View {
                     Spacer()
                     FilterListView()
                         .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 26))
+                    // TODO: push to view. We want to see title, cuisine, link, palyable video, large image
                     List(manager.filteredList, id: \.uuid) { recipe in
                         RecipeListCell(recipe: recipe)
                             .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                     }
+                    .scrollIndicators(.hidden)
+                    .listRowSpacing(10)
                 }
                 .navigationTitle(Text("Fetch Recipes"))
             }
