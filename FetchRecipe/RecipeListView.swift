@@ -22,6 +22,7 @@ struct RecipeListView: View {
                     .scrollIndicators(.hidden)
                     .listRowSpacing(10)
                     .refreshable {
+                        manager.imageCache.wipe()
                         await fetchRecipes()
                     }
                 }
@@ -37,15 +38,20 @@ struct RecipeListView: View {
     
     func fetchRecipes() async {
         do {
-            let fetchedRecipes = try await NetworkManager.getRecipes()
-            manager.recipes = fetchedRecipes.recipes.map { RecipeViewModel(recipe: $0) }
+            if let fetchedRecipes = try await NetworkManager.getRecipes() {
+                manager.recipes = fetchedRecipes.recipes.map { RecipeViewModel(recipe: $0) }
+            }
         }
         // TODO: Replacing view when error occurs
         catch {
-//            switch error {
-//            case .failedToGetData: Text("failed to get data")
-//            case .invalidURL: Text("invalid url")
-//            }
+            let fetchError = error as? FetchError
+            switch fetchError {
+            case .failedToGetData: print("failed to get Data")
+            case .invalidURL: print("invalid url")
+            case .badData: print("bad data")
+            case .emptyResponse: print("empty")
+            default: print("something else")
+            }
         }
     }
 }

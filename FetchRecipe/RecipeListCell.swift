@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RecipeListCell: View {
     @State var recipe: RecipeViewModel?
+    @EnvironmentObject var manager: Manager
     
     var body: some View {
         HStack {
@@ -33,24 +34,7 @@ struct RecipeListCell: View {
                 }
             }
             Spacer(minLength: 10)
-            AsyncImage(url: recipe?.smallPhotoURL) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .frame(width: 150)
-                default:
-                    Image(systemName: "photo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                }
-            }
+            LazyImage(uuid: recipe?.uuid, url: recipe?.recipe.photo_url_small, image: UIImage(systemName: "photo")!)
         }
         .swipeActions {
             Button("Favorite", systemImage: "star", action: {
@@ -61,6 +45,39 @@ struct RecipeListCell: View {
     }
 }
 
-//struct RecipeSiteLink
-//
-//struct RecipeVideoLink
+struct LazyImage: View {
+    @EnvironmentObject var manager: Manager
+    @State var uuid: String?
+    @State var url: String?
+    @State var image: UIImage
+    
+    var body: some View {
+        Image(uiImage: image)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .frame(width: 150)
+            .onAppear {
+                Task {
+                    await fetchImage()
+                }
+            }
+    }
+    
+    private func fetchImage() async {
+        if let cachedImageData = manager.imageCache.retrieve(key: uuid),
+           let cachedImage = UIImage(data: cachedImageData as Data) {
+            image = cachedImage
+            return
+        }
+        
+        do {
+            let imageData = try await NetworkManager.getImage(urlString: url)
+            if let uiImage = UIImage(data: imageData), let id = uuid {
+                image = uiImage
+                manager.imageCache.set(key: id, data: imageData as NSData)
+            }
+        }
+        catch {}
+    }
+}

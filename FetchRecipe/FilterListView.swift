@@ -14,6 +14,7 @@ struct FilterListView: View {
                     }
                 }
             }
+            .scrollIndicators(.hidden)
             Button("Clear All Filters") {
                 manager.appliedFilters.removeAll()
             }
