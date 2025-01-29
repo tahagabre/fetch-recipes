@@ -23,12 +23,11 @@ struct SelectableFilterButton: View {
 
 struct NonSelectableFilterButton: View {
     @State var title: String
-    @State var action: () -> ()
     
     var body: some View {
         Button(title) {}
         .lineLimit(0)
-        .frame(height: 2, alignment: .leading)
+        .frame(width: 80, height: 2, alignment: .center)
         .padding()
         .background(Color(.lightGray))
         .foregroundStyle(.black)
