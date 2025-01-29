@@ -16,7 +16,7 @@ struct SelectableFilterButton: View {
         .background(Color(.lightGray))
         .foregroundStyle(.black)
         .clipShape(.capsule)
-        .opacity(isSelected ? 1 : 0.5) // TODO: if you clear filters, isSelected on the button is still true
+        .opacity(isSelected ? 1 : 0.5)
         .animation(.easeInOut, value: isSelected)
     }
 }
@@ -33,6 +33,6 @@ struct NonSelectableFilterButton: View {
         .background(Color(.lightGray))
         .foregroundStyle(.black)
         .clipShape(.capsule)
-        .opacity(0.5) // TODO: if you clear filters, isSelected on the button is still true
+        .opacity(0.5)
     }
 }
